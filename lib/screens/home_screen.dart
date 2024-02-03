@@ -34,7 +34,7 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: FeedScreen(),
+          child: displayedScreen,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

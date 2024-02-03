@@ -50,7 +50,23 @@ class PhotoCaptureScreenState extends State<PhotoCaptureScreen> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           // If the Future is complete, display the preview.
-          return CameraPreview(_controller);
+          return Column(
+            children: [
+              CameraPreview(_controller),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton(
+                    onPressed: () {
+                      final image = _controller.takePicture();
+                      var img = image;
+                    },
+                    child: Text(
+                      'Capture',
+                      style: TextStyle(fontSize: 50),
+                    )),
+              )
+            ],
+          );
         } else {
           // Otherwise, display a loading indicator.
           return const Center(child: CircularProgressIndicator());
