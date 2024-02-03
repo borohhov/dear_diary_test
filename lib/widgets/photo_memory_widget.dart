@@ -1,5 +1,6 @@
 import 'package:dear_diary/entities/photo_memory.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class PhotoMemoryWidget extends StatelessWidget {
@@ -17,7 +18,21 @@ class PhotoMemoryWidget extends StatelessWidget {
             DateFormat('MMM d, yyyy').format(photoMemory.date),
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
-          Text(photoMemory.filePath),
+          Center(
+            // Use a Container to create a square shape
+            child: Container(
+              width: 200, // Specify the width of the square
+              height: 200, // Specify the height of the square
+              decoration: BoxDecoration(
+                // Optionally, add a border around the square
+                border: Border.all(color: Colors.blueAccent),
+              ),
+              child: Image.network(
+                'https://your-image-url-here.com/image.jpg',
+                fit: BoxFit.cover, // This will cover the square area without changing the aspect ratio of the image
+              ),
+            ),
+          ),
           Text(photoMemory.text)
         ],
       ),
