@@ -1,15 +1,14 @@
 // A screen that allows users to take a picture using a given camera.
 import 'package:camera/camera.dart';
+import 'package:dear_diary/controllers/camera_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class PhotoCaptureScreen extends StatefulWidget {
   const PhotoCaptureScreen({
     super.key,
-    required this.camera,
   });
-
-  final CameraDescription camera;
 
   @override
   PhotoCaptureScreenState createState() => PhotoCaptureScreenState();
@@ -17,38 +16,48 @@ class PhotoCaptureScreen extends StatefulWidget {
 
 class PhotoCaptureScreenState extends State<PhotoCaptureScreen> {
   late CameraController _controller;
-  late Future<void> _initializeControllerFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
-    _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
-      widget.camera,
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
-
-    // Next, initialize the controller. This returns a Future.
-    _initializeControllerFuture = _controller.initialize();
-  }
-
+  bool _isCapturing = false;
   @override
   void dispose() {
     // Dispose of the controller when the widget is disposed.
     _controller.dispose();
     super.dispose();
   }
+  void _captureImage() async {
+    if (_isCapturing) {
+      return; // If a capture is already in progress, do nothing
+    }
+
+    setState(() {
+      _isCapturing = true; // Disable the button
+    });
+
+    try {
+      // Attempt to take a picture
+      final image = await _controller.takePicture();
+      // Process the image as needed
+      setState(() {
+        _isCapturing = false; // Re-enable the button
+      });
+      var img = image;
+    } catch (e) {
+      // Handle any errors here
+      print(e);
+    } finally {
+      setState(() {
+        _isCapturing = false; // Re-enable the button
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     // Fill this out in the next steps.
-    return FutureBuilder<void>(
-      future: _initializeControllerFuture,
+    return FutureBuilder<CameraController>(
+      future: Provider.of<CameraProvider>(context).getCameraController(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.done ) {
+          _controller = snapshot.data!;
           // If the Future is complete, display the preview.
           return Column(
             children: [
@@ -56,10 +65,7 @@ class PhotoCaptureScreenState extends State<PhotoCaptureScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: OutlinedButton(
-                    onPressed: () {
-                      final image = _controller.takePicture();
-                      var img = image;
-                    },
+                    onPressed: _isCapturing ? null : _captureImage,
                     child: Text(
                       'Capture',
                       style: TextStyle(fontSize: 50),

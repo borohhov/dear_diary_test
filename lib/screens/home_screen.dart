@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:dear_diary/screens/feed_screen.dart';
 import 'package:dear_diary/screens/photo_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,8 +5,7 @@ import 'package:flutter/material.dart';
 
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.camera});
-  final CameraDescription camera;
+  const HomeScreen({super.key});
   @override
   State<StatefulWidget> createState() {
     return HomeScreenState();
@@ -29,7 +27,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     screens = [
       const FeedScreen(),
-      PhotoCaptureScreen(camera: widget.camera)
+      PhotoCaptureScreen()
     ];
     return Scaffold(
       body: SafeArea(
