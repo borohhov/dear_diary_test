@@ -7,7 +7,7 @@ class CameraProvider extends ChangeNotifier  {
     final cameras = await availableCameras();
 
 // Get a specific camera from the list of available cameras.
-    return cameras.first;
+    return cameras.last;
   }
 
   Future<CameraController> getCameraController() async {
