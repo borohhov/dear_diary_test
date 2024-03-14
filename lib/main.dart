@@ -1,4 +1,5 @@
 import 'package:dear_diary/controllers/camera_provider.dart';
+import 'package:dear_diary/controllers/photo_memory_provider.dart';
 import 'package:dear_diary/screens/display_image_screen.dart';
 import 'package:dear_diary/screens/feed_screen.dart';
 import 'package:dear_diary/screens/home_screen.dart';
@@ -8,10 +9,13 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
+    MultiProvider(providers: [
       ChangeNotifierProvider(
         create: (context) => CameraProvider(),
-        child: MyApp(),
-      )
+      ),
+      ChangeNotifierProvider(create: (context) => PhotoMemoryProvider())
+    ], child: MyApp(),)
+
   );
 }
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dear_diary/entities/photo_memory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,18 @@ class PhotoMemoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget image;
+    if(photoMemory.filePath.startsWith('http')) {
+      image = Image.network(
+        Uri.encodeFull(photoMemory.filePath),
+        fit: BoxFit
+            .cover, // This will cover the square area without changing the aspect ratio of the image
+      );
+    }
+    else {
+      image = Image.file(File(photoMemory.filePath));
+    }
+
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
@@ -33,11 +47,7 @@ class PhotoMemoryWidget extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 // Match the Container's BorderRadius
-                child: Image.network(
-                  Uri.encodeFull(photoMemory.filePath),
-                  fit: BoxFit
-                      .cover, // This will cover the square area without changing the aspect ratio of the image
-                ),
+                child: image
               ),
             ),
           ),
