@@ -16,6 +16,7 @@ class PhotoMemoryProvider extends ChangeNotifier {
   }
 
   List<PhotoMemory> getAllPhotoMemories() {
+    _demoList.sort();
     return _demoList;
   }
 }

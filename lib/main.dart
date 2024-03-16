@@ -1,4 +1,5 @@
 import 'package:dear_diary/controllers/camera_provider.dart';
+import 'package:dear_diary/controllers/open_meteo_weather_controller.dart';
 import 'package:dear_diary/controllers/photo_memory_provider.dart';
 import 'package:dear_diary/screens/display_image_screen.dart';
 import 'package:dear_diary/screens/feed_screen.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/displayImageScreen': (context) => const DisplayImageScreen(),
+        '/feedScreen': (context) => const FeedScreen()
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),

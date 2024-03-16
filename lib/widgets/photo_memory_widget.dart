@@ -31,7 +31,7 @@ class PhotoMemoryWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: Text(
-              DateFormat('MMM d, yyyy').format(photoMemory.date),
+              '${DateFormat('MMM d, yyyy').format(photoMemory.date)} ${photoMemory.weather}',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ),

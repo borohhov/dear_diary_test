@@ -27,6 +27,7 @@ class PhotoCaptureScreenState extends State<PhotoCaptureScreen> {
     _controller.dispose();
     super.dispose();
   }
+
   Future<void> captureImageAndNavigate(context) async {
     if (!_controller.value.isInitialized) {
       print('Error: Camera not initialized.');
@@ -48,30 +49,58 @@ class PhotoCaptureScreenState extends State<PhotoCaptureScreen> {
     }
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     // Fill this out in the next steps.
     return FutureBuilder<CameraController>(
       future: Provider.of<CameraProvider>(context).getCameraController(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done ) {
+        if (snapshot.connectionState == ConnectionState.done) {
           _controller = snapshot.data!;
           // If the Future is complete, display the preview.
           return Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
-              CameraPreview(_controller),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: OutlinedButton(
-                    onPressed: () async => await captureImageAndNavigate(context),
-                    child: Text(
-                      'Capture',
-                      style: TextStyle(fontSize: 50),
-                    )),
-              )
+              Stack(
+                children: [
+                  Expanded(child: CameraPreview(_controller)),
+                  Container(
+                      child: Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      color: Colors.blue.withOpacity(0.5),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                            onTap: () async =>
+                                await captureImageAndNavigate(context),
+                            child: Container(
+                              padding: EdgeInsets.all(4),
+                              // Space between border and inner circle
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent,
+                                // Transparent background
+                                border: Border.all(
+                                    color: Colors.white,
+                                    width: 4), // White circular border
+                              ),
+                              child: Container(
+                                width: 60, // Diameter of the inner circle
+                                height: 60, // Diameter of the inner circle
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white, // White inner circle
+                                ),
+                              ),
+                            )),
+                      ),
+                    ),
+                  ))
+                ],
+              ),
             ],
           );
         } else {
