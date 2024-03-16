@@ -37,7 +37,7 @@ class DisplayImageScreenState extends State<DisplayImageScreen> {
           onPressed: () async {
             WeatherData wd = await fetchWeather();
             photoMemory.weather = getWeatherIcon(wd);
-            photoMemory.text = textEditingController.value.text;
+            photoMemory.description = textEditingController.value.text;
             Provider.of<PhotoMemoryProvider>(context, listen: false)
                 .addPhotoMemory(photoMemory);
             Navigator.of(context).popAndPushNamed('/');

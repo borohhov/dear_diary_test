@@ -51,7 +51,7 @@ class PhotoMemoryWidget extends StatelessWidget {
               ),
             ),
           ),
-          Text(photoMemory.text, style: TextStyle(fontSize: 16),)
+          Text(photoMemory.description, style: TextStyle(fontSize: 16),)
         ],
       ),
     );
