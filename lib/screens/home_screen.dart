@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   List<Widget> screens = [];
-  late Widget displayedScreen = const FeedScreen();
+  late Widget displayedScreen = FeedScreen();
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -26,7 +26,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     screens = [
-      const FeedScreen(),
+      FeedScreen(),
       PhotoCaptureScreen()
     ];
     return Scaffold(

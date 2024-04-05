@@ -18,7 +18,7 @@ class PhotoMemory implements Comparable<PhotoMemory> {
 
   factory PhotoMemory.fromMap(Map<String, dynamic> map) {
     PhotoMemory pm = PhotoMemory(
-      DateTime(map['date']),
+      DateTime.parse(map['date']),
       map['description'],
       map['filePath'],
     );
